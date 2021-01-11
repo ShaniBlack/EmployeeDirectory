@@ -1,25 +1,36 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { Component } from "react";
+import EmployeeContainer from "./components/EmployeeContainer";
+import API from "./utils/API"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+  state = {
+    employees: [],
+    search: "",
+    order: "descend"
+  }
+
+  componentDidMount() {
+    API.getEmployees()
+    .then(res => this.setState({...this.state, employees: res.data.results}))
+    .catch(err => console.log(err));
+};
+
+handleInputChange = event => {
+  // Updating the input's state
+  this.setState({
+    search: event.target.value
+  });
+};
+
+
+render () {
+  return <EmployeeContainer employees={this.state.employees} search={this.state.search}/>;
+  
+
+}
 }
 
 export default App;

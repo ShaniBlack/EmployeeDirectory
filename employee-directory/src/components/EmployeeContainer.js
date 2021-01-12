@@ -1,41 +1,45 @@
-import React from "react";
+import React, { Component } from "react";
+import API from "../utils/API";
 
-const EmployeeContainer = function (props) {
 
-    return(
-        <table>
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                {props.employees.map(employee => {
-                    if(employee.name.first.toLowerCase().includes(props.search)){
-                        return(
-                            <tr>
-                                <td>
-                                    <img src={employee.picture.thumbnail} alt="employee"/>
-                                </td>
-                                <td>
-                                    {employee.name.first} {employee.name.last}
-                                </td>
-                                <td>
-                                    {employee.phone}
-                                </td>
-                                <td>
-                                    {employee.email}
-                                </td>
-                            </tr>
-                        )
-                    }
-                })}
-            </tbody>
-        </table>
-    )
-}
+class EmployeeContainer extends Component {
+    state = {
+      employees: [],
+      search: "",
+      filteredEmployees: [],
+      sortOrder: this.initalSortOrder
+    };
 
-export default EmployeeContainer;
+    get initialSortOrder() {
+        return {
+            name: "",
+            phone: "",
+            email: ""
+        };
+    };
+  
+    componentDidMount() {
+      API.getEmployees()
+      .then(res => this.setState({employees: res.data.results, filteredEmployees: res.data.results}))
+      .catch(err => console.log(err));
+  };
+
+
+  
+  handleInputChange = event => {
+    this.setState({
+      search: event.target.value
+    });
+  };
+
+  handleFormSubmit = event => {
+      event.preventDefault();
+  }
+  
+  
+  render () {
+    return <EmployeeContainer employees={this.state.employees} search={this.state.search}/>;
+  }
+  }
+
+export default EmployeeContainer

@@ -23,7 +23,7 @@ function EmployeeTable(props) {
             </thead>
             <tbody>
                 {props.filteredEmployees && props.filteredEmployees.map(employee => {
-                    if(employee.name.first.toLowerCase().includes(props.search.toLowerCase())) {
+                    if(employee.first.toLowerCase().includes(props.search.toLowerCase())) {
                         return(
                             <tr>
                                 <td>

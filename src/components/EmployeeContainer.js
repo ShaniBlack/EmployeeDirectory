@@ -40,11 +40,6 @@ class EmployeeContainer extends Component {
     return (
       // JSX fragment to allow return of multiple elements
       <>
-      {/* <input
-      onChange={() => this.handleInputChange}
-      
-      /> */}
-    
     <SearchForm
     search={this.state.search}
     handleFormSubmit={this.handleFormSubmit}

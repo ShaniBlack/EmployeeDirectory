@@ -13,20 +13,17 @@ function EmployeeTable(props) {
                             Name
                             </span>
                             </th>
-                            <th scope="col">
-                        <span onClick={() => props.sortBy("phone")}>
+                            <th>
                             Phone
-                            </span>
                             </th>
-                            <th scope="col">
-                        <span onClick={() => props.sortBy("email")}>
+                            <th>
                             Email
-                            </span>
                             </th>
-                            </tr>
+                            </tr> 
             </thead>
             <tbody>
-                {props.state.filteredEmployees.map(employee => {
+                {props.filteredEmployees && props.filteredEmployees.map(employee => {
+                    if(employee.name.first.toLowerCase().includes(props.search.toLowerCase())) {
                         return(
                             <tr>
                                 <td>
@@ -42,7 +39,7 @@ function EmployeeTable(props) {
                                     {employee.email}
                                 </td>
                             </tr>
-                        )
+                        )}
                     })
                 }
             </tbody>
